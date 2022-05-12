@@ -2,7 +2,7 @@ clc
 clear
 close all;
 
-S = 6000000;
+S = 50000;
 E = 0;
 E1 = 0;
 I = 1;
@@ -50,28 +50,65 @@ x2 = 2/3;
 v = 1/7;
 
 
+hcba = 0; %被接触感染的概率概率
+
+
+
+
 y0 = [S E E1 A I I1 I2 R D];
 tspan2 = [0 500];
-[t, y1] = ode45(@(t,y)odefun(t,y,a,a1,b,cba,d,H,g2,k1,l1,12,x1,x2,N,v), tspan2, y0);
+[t, y1] = ode45(@(t,y)odefun1(t,y,a,a1,b,hcba,cba,d,H,g2,k1,l1,12,x1,x2,N,v), tspan2, y0);
 disp(sum(y1(:,4))+sum(y1(:,7)))
+
+plot(t,y1(:,1),'b',t,y1(:,2),'m',t,(y1(:,7)+y1(:,4)),'k',t,y1(:,8),'c',t,y1(:,9),'r')
+xlabel('day')
+ylabel('person')
+legend('S','E','Q','R','D')
+title('naturn-isolation SEIR model(city)')
+
 %%
+%{
 tspan2 = [0 65.6];
 [t, y2] = ode45(@(t,y)odefun(t,y,a,a1,b,cba,d,H,g2,k1,l1,12,x1,x2,N,v), tspan2, y0);
 
 y1 = y2(end,:);
 
+plot(t,y2(:,1),'b',t,y2(:,2),'m',t,(y2(:,7)+y2(:,4)),'k',t,y2(:,8),'c',t,y2(:,9))
+hold on;
+
+
 tspan2 = [65.6 500];
-[t, y2] = ode45(@(t,y)odefun(t,y,a,a1,b,cba,d,H,g2,k1,l1,12,x1,x2,N,v), tspan2, y1);
+[t, y2] = ode45(@(t,y)odefun1(t,y,a,a1,b,hcba,cba,d,H,g2,k1,l1,12,x1,x2,N,v), tspan2, y1);
 disp(sum(y2(:,4))+sum(y2(:,7)))
+
+plot(t,y2(:,1),'b',t,y2(:,2),'m',t,(y2(:,7)+y2(:,4)),'k',t,y2(:,8),'c',t,y2(:,9))
+xlabel('day')
+ylabel('person')
+legend('S','E','Q','R','D')
+title('First changed SEIR model(university)')
+
+
 %%
+
 tspan3 = [0 78];
 [t, y3] = ode45(@(t,y)odefun(t,y,a,a1,b,cba,d,H,g2,k1,l1,12,x1,x2,N,v), tspan3, y0);
-
 y1 = y3(end,:);
 
+
+plot(t,y3(:,1),'b',t,y3(:,2),'m',t,(y3(:,7)+y3(:,4)),'k',t,y3(:,8),'c',t,y3(:,9))
+hold on;
+
+
 tspan2 = [78 500];
-[t, y3] = ode45(@(t,y)odefun(t,y,a,a1,b,cba,d,H,g2,k1,l1,12,x1,x2,N,v), tspan2, y1);
+[t, y3] = ode45(@(t,y)odefun1(t,y,a,a1,b,hcba,cba,d,H,g2,k1,l1,12,x1,x2,N,v), tspan2, y1);
 disp(sum(y3(:,4))+sum(y3(:,7)))
+
+plot(t,y3(:,1),'b',t,y3(:,2),'m',t,(y3(:,7)+y3(:,4)),'k',t,y3(:,8),'c',t,y3(:,9))
+xlabel('day')
+ylabel('person')
+legend('S','E','Q','R','D')
+title('First changed SEIR model(university)')
+
 %%
 tspan4 = [0 168];
 [t, y4] = ode45(@(t,y)odefun(t,y,a,a1,b,cba,d,H,g2,k1,l1,12,x1,x2,N,v), tspan4, y0);
@@ -79,18 +116,26 @@ tspan4 = [0 168];
 y1 = y4(end,:);
 
 tspan2 = [168 500];
-[t, y4] = ode45(@(t,y)odefun(t,y,a,a1,b,cba,d,H,g2,k1,l1,12,x1,x2,N,v), tspan2, y1);
+[t, y4] = ode45(@(t,y)odefun1(t,y,a,a1,b,hcba,cba,d,H,g2,k1,l1,12,x1,x2,N,v), tspan2, y1);
 
 disp(sum(y4(:,4))+sum(y4(:,7)))
 %%
-tspan5 = [200 500];
+tspan5 = [0 200];
 [t, y5] = ode45(@(t,y)odefun(t,y,a,a1,b,cba,d,H,g2,k1,l1,12,x1,x2,N,v), tspan5, y0);
 
 y1 = y5(end,:);
+plot(t,y5(:,1),'b',t,y5(:,2),'m',t,(y5(:,7)+y5(:,4)),'k',t,y5(:,8),'c',t,y5(:,9))
+hold on;
 
-tspan2 = [65.6 500];
-[t, y5] = ode45(@(t,y)odefun(t,y,a,a1,b,cba,d,H,g2,k1,l1,12,x1,x2,N,v), tspan2, y1);
+tspan2 = [200 500];
+[t, y5] = ode45(@(t,y)odefun1(t,y,a,a1,b,hcba,cba,d,H,g2,k1,l1,12,x1,x2,N,v), tspan2, y1);
 disp(sum(y5(:,4))+sum(y5(:,7)))
+plot(t,y5(:,1),'b',t,y5(:,2),'m',t,(y5(:,7)+y5(:,4)),'k',t,y5(:,8),'c',t,y5(:,9))
+xlabel('day')
+ylabel('person')
+legend('S','E','Q','R','D')
+title('First changed SEIR model(university)')
+%}
 %%
 function dydt = odefun(t,y,a,a1,b,cba,d,H,g2,k1,l1,l2,x1,x2,N,v)
 dydt = zeros(9,1);
@@ -101,7 +146,19 @@ dydt(4) = a*y(2)-H*y(4)-a1*y(4); %a
 dydt(5) = b*y(2)+H*y(4)-(x1+x2)*y(5); %ri
 dydt(6) = x1*y(5)+l1*y(7)-l2*y(6)-k1*y(6); %i1
 dydt(7) = x2*y(5)-l1*y(7)+l2*y(6)-g2*y(7); %i2
-%dydt(8) = x3*y(5)-g3*y(8)-k3*y(8); %i3
+dydt(8) = g2*y(7)+a1*y(4)-v*y(8); %r
+dydt(9) = k1*y(6); %d
+end
+
+function dydt = odefun1(t,y,a,a1,b,hcba,cba,d,H,g2,k1,l1,l2,x1,x2,N,v)
+dydt = zeros(9,1);
+dydt(1) = -hcba*y(1)*(y(6)+y(7))/N-cba*y(1)*y(4)/N+v*y(8)+v*y(3); %s
+dydt(2) = hcba*y(1)*(y(6)+y(7))/N+cba*y(1)*y(4)/N-b*y(2)-a*y(2)-d*y(2); %e
+dydt(3) = d*y(2)-v*y(3); %e1
+dydt(4) = a*y(2)-H*y(4)-a1*y(4); %a
+dydt(5) = b*y(2)+H*y(4)-(x1+x2)*y(5); %ri
+dydt(6) = x1*y(5)+l1*y(7)-l2*y(6)-k1*y(6); %i1
+dydt(7) = x2*y(5)-l1*y(7)+l2*y(6)-g2*y(7); %i2
 dydt(8) = g2*y(7)+a1*y(4)-v*y(8); %r
 dydt(9) = k1*y(6); %d
 end
