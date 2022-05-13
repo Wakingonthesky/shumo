@@ -2,7 +2,7 @@ clc
 clear
 close all;
 
-S = 50000;
+S = 60000000;
 E = 0;
 E1 = 0;
 I = 1;
@@ -61,7 +61,7 @@ plot(t,y(:,1),'b',t,y(:,2),'m',t,y(:,4),'r',t,y(:,6),'g',t,y(:,7),'k',t,y(:,8),'
 xlabel('day')
 ylabel('person')
 legend('S','E','A','I1','I2','R','D')
-title('Second changed SEIR model(university)')
+title('Second changed SEIR model(city)')
 
 function dydt = odefun(t,y,a,a1,b,cba,d,H,g2,k1,l1,l2,x1,x2,N)
 dydt = zeros(9,1);

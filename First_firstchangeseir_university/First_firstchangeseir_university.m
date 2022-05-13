@@ -27,8 +27,9 @@ D = 0;
 N = S + I;
 
 a = 1/4;  %潜伏者转化为感染者的速率
+a1 = 0.2; %无症状感染者的治愈的概率
 b = 1/7;  %潜伏者转轻症
-cba = 0.8; %被接触感染的概率概率
+cba = 0.8; %被接触感染的概率
 d = 0.2;  %潜伏者自愈
 mu = 1/7; %潜伏者转轻症
 g = 0.154; %治愈率
@@ -39,19 +40,21 @@ H = 0.86; %无症状转轻症
 o = 0.187;%老年人比例
 
 tspan = [0 150];
-y0 = [S E I R];
-[t, y] = ode45(@(t,y)odefun(t,y,b,cba,g,N), tspan, y0);
+y0 = [S E A I R D];
+[t, y] = ode45(@(t,y)odefun(t,y,a,a1,b,cba,H,g,k,N), tspan, y0);
 
-plot(t,y(:,1),'b',t,y(:,2),'m',t,y(:,3),'r',t,y(:,4),'k')
+plot(t,y(:,1),'b',t,y(:,2),'m',t,y(:,3),'r',t,y(:,4),'k',t,y(:,5),'c',t,y(:,6),'g')
 xlabel('day')
 ylabel('person')
-legend('S','E','I','R')
-title('tranditional SEIR model(university)')
+legend('S','E','A','I','R','D')
+title('First change SEIR model(university)')
 
-function dydt = odefun(t,y,b,cba,g,N)
-dydt = zeros(4,1);
-dydt(1) = -cba*y(1)*y(3)/N;
-dydt(2) = cba*y(1)*y(3)/N-b*y(2);
-dydt(3) = b*y(2)-g*y(3);
-dydt(4) = g*y(3);
+function dydt = odefun(t,y,a,a1,b,cba,H,g,k,N)
+dydt = zeros(6,1);
+dydt(1) = -cba*y(1)*y(4)/N-cba*y(1)*y(3)/N;
+dydt(2) = cba*y(1)*y(4)/N+cba*y(1)*y(3)/N-b*y(2)-a*y(2);
+dydt(3) = a*y(2)-H*y(3)-a1*y(3);
+dydt(4) = b*y(2)+H*y(3)-g*y(4)-k*y(4);
+dydt(5) = g*y(4)+a1*y(3);
+dydt(6) = k*y(4)
 end

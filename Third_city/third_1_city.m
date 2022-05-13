@@ -52,11 +52,12 @@ tspan = [0 500];
 y0 = [S E E1 A I I1 I2 R D];
 [t, y] = ode45(@(t,y)odefun(t,y,a,a1,b,cba,d,H,g2,k1,l1,12,x1,x2,N,v), tspan, y0);
 plot(t,y(:,1),'b',t,y(:,2),'m',t,(y(:,7)+y(:,4)),'k',t,y(:,8),'c',t,y(:,9),'r')
+disp(sum(y(:,7))+sum(y(:,4)))
 
 xlabel('day')
 ylabel('person')
 legend('S','E','Q','R','D')
-title(' using vaccine SEIRS model(city)')
+title('using vaccine SEIRS model(city)')
 
 function dydt = odefun(t,y,a,a1,b,cba,d,H,g2,k1,l1,l2,x1,x2,N,v)
 dydt = zeros(9,1);
